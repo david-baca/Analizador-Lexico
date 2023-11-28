@@ -1,5 +1,6 @@
 package Vistas;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -8,6 +9,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultHighlighter;
 
 public class Casilla extends javax.swing.JFrame {
 
@@ -31,7 +34,7 @@ public class Casilla extends javax.swing.JFrame {
 
         jTextArea1.setBackground(new java.awt.Color(51, 51, 51));
         jTextArea1.setColumns(20);
-        jTextArea1.setForeground(new java.awt.Color(0, 153, 255));
+        jTextArea1.setForeground(new java.awt.Color(255, 255, 255));
         jTextArea1.setRows(5);
         jTextArea1.setText("hola nundo");
         jTextArea1.setMargin(new java.awt.Insets(5, 5, 5, 5));
@@ -104,12 +107,19 @@ public class Casilla extends javax.swing.JFrame {
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
                 String texto = "";
                 String linea;
+                String cadenaInicial ="";
                 int contador = 0;
                 while ((linea = bufferedReader.readLine()) != null) {
+                   
                     texto += contador + " " + linea + "\n";
+                     if(contador<5){
+                     cadenaInicial = texto;
+                    }
                     contador ++;
                 }
                 jTextArea1.setText(texto);
+                System.out.print(cadenaInicial);
+                setColorForText(cadenaInicial, new Color(128, 0, 128));
                 JOptionPane.showMessageDialog(null, "Archivo leído correctamente");
                 bufferedReader.close(); // Cierra el BufferedReader después de usarlo
             } catch (IOException e) {
@@ -119,6 +129,43 @@ public class Casilla extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void Disernir () {
+        boolean Encabezado;
+        boolean Cuerpo;
+        boolean variables;
+    }
+    
+    private class Encabezado{
+        boolean estado;
+    }
+    
+    private class Cuerpo{
+        boolean estado;
+    }
+    
+    private class variables{
+        boolean estado;
+    }
+    
+    
+    
+    
+    private void setColorForText(String text, Color backgroundColor) {
+        DefaultHighlighter highlighter = (DefaultHighlighter) jTextArea1.getHighlighter();
+        DefaultHighlighter.DefaultHighlightPainter painter = new DefaultHighlighter.DefaultHighlightPainter(backgroundColor);
+
+        try {
+            int start = jTextArea1.getText().indexOf(text);
+            int end = start + text.length();
+
+            // Resalta la línea con el color de fondo deseado
+            highlighter.addHighlight(start, end, painter);
+        } catch (BadLocationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
