@@ -11,6 +11,7 @@ import javax.swing.JTextArea;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter;
+import upqroo.analizador_lexico.Analizador;
 
 public class Casilla extends javax.swing.JFrame {
 
@@ -27,17 +28,24 @@ public class Casilla extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        Alertas = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 51));
 
-        jTextArea1.setBackground(new java.awt.Color(51, 51, 51));
+        jTextArea1.setBackground(new java.awt.Color(153, 153, 153));
         jTextArea1.setColumns(20);
         jTextArea1.setForeground(new java.awt.Color(255, 255, 255));
         jTextArea1.setRows(5);
         jTextArea1.setText("hola nundo");
         jTextArea1.setMargin(new java.awt.Insets(5, 5, 5, 5));
+        jTextArea1.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                jTextArea1CaretUpdate(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTextArea1);
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -51,6 +59,12 @@ public class Casilla extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+
+        Alertas.setBackground(new java.awt.Color(0, 0, 0));
+        Alertas.setColumns(20);
+        Alertas.setForeground(new java.awt.Color(255, 255, 153));
+        Alertas.setRows(5);
+        jScrollPane2.setViewportView(Alertas);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -66,6 +80,10 @@ public class Casilla extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 330, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(18, 18, 18))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -75,8 +93,9 @@ public class Casilla extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -110,7 +129,6 @@ public class Casilla extends javax.swing.JFrame {
                 String cadenaInicial ="";
                 int contador = 0;
                 while ((linea = bufferedReader.readLine()) != null) {
-                   
                     texto += contador + " " + linea + "\n";
                      if(contador<5){
                      cadenaInicial = texto;
@@ -118,8 +136,13 @@ public class Casilla extends javax.swing.JFrame {
                     contador ++;
                 }
                 jTextArea1.setText(texto);
-                System.out.print(cadenaInicial);
-                setColorForText(cadenaInicial, new Color(128, 0, 128));
+                Analizador lexico = new Analizador(jTextArea1,Alertas);
+                String[] partes = texto.split("\n");
+                for (int i = 0; i < partes.length; i++) {
+                    lexico.Analizar(partes[i]);
+                }
+
+                
                 JOptionPane.showMessageDialog(null, "Archivo leído correctamente");
                 bufferedReader.close(); // Cierra el BufferedReader después de usarlo
             } catch (IOException e) {
@@ -129,48 +152,23 @@ public class Casilla extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void Disernir () {
-        boolean Encabezado;
-        boolean Cuerpo;
-        boolean variables;
-    }
-    
-    private class Encabezado{
-        boolean estado;
-    }
-    
-    private class Cuerpo{
-        boolean estado;
-    }
-    
-    private class variables{
-        boolean estado;
-    }
-    
-    
-    
-    
-    private void setColorForText(String text, Color backgroundColor) {
-        DefaultHighlighter highlighter = (DefaultHighlighter) jTextArea1.getHighlighter();
-        DefaultHighlighter.DefaultHighlightPainter painter = new DefaultHighlighter.DefaultHighlightPainter(backgroundColor);
-
-        try {
-            int start = jTextArea1.getText().indexOf(text);
-            int end = start + text.length();
-
-            // Resalta la línea con el color de fondo deseado
-            highlighter.addHighlight(start, end, painter);
-        } catch (BadLocationException e) {
-            e.printStackTrace();
+    private void jTextArea1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextArea1CaretUpdate
+        System.out.println("hola");
+        String texto=jTextArea1.getText();
+        Analizador lexico = new Analizador(jTextArea1,Alertas);
+        String[] partes = texto.split("\n");
+        for (int i = 0; i < partes.length; i++) {
+            lexico.Analizar(partes[i]);
         }
-    }
-
+    }//GEN-LAST:event_jTextArea1CaretUpdate
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea Alertas;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }

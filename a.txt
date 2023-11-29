@@ -1,0 +1,13 @@
+@invo
+
+@Proceso: Persona
+	#Numero edad = 21;
+	#Texto Nombre = Angel;
+	#Gato Nacido = true;
+	#Decimal Peso = 1.200;
+	@Iniciar: Hablar
+
+	@Proceso: hablar
+	 
+	@Terminado
+@Terminado
