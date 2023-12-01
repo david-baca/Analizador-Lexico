@@ -30,6 +30,7 @@ public class Casilla extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         Alertas = new javax.swing.JTextArea();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -40,7 +41,10 @@ public class Casilla extends javax.swing.JFrame {
         jTextArea1.setForeground(new java.awt.Color(255, 255, 255));
         jTextArea1.setRows(5);
         jTextArea1.setText("hola nundo");
+        jTextArea1.setCaretColor(new java.awt.Color(255, 255, 255));
+        jTextArea1.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         jTextArea1.setMargin(new java.awt.Insets(5, 5, 5, 5));
+        jTextArea1.setSelectionColor(new java.awt.Color(204, 204, 255));
         jTextArea1.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
                 jTextArea1CaretUpdate(evt);
@@ -66,6 +70,13 @@ public class Casilla extends javax.swing.JFrame {
         Alertas.setRows(5);
         jScrollPane2.setViewportView(Alertas);
 
+        jButton2.setText("Escanear");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -77,7 +88,9 @@ public class Casilla extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 330, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 236, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1)
                 .addGap(18, 18, 18))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -91,7 +104,8 @@ public class Casilla extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
@@ -138,8 +152,12 @@ public class Casilla extends javax.swing.JFrame {
                 jTextArea1.setText(texto);
                 Analizador lexico = new Analizador(jTextArea1,Alertas);
                 String[] partes = texto.split("\n");
+                lexico.Cleen();
                 for (int i = 0; i < partes.length; i++) {
                     lexico.Analizar(partes[i]);
+                    if(partes.length == i){
+                        lexico.Terminado(partes[i]);
+                    }
                 }
 
                 
@@ -153,18 +171,45 @@ public class Casilla extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextArea1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextArea1CaretUpdate
-        System.out.println("hola");
+        Alertas.setText("");
         String texto=jTextArea1.getText();
-        Analizador lexico = new Analizador(jTextArea1,Alertas);
+        
         String[] partes = texto.split("\n");
         for (int i = 0; i < partes.length; i++) {
+            if(partes.length == i+1){
+                texto += i + " " + i + "\n";
+            }
+        }
+        jTextArea1.setText(texto);
+        Analizador lexico = new Analizador(jTextArea1,Alertas);
+        lexico.Cleen();
+        for (int i = 0; i < partes.length; i++) {
             lexico.Analizar(partes[i]);
+            if(partes.length == i+1){
+                lexico.Terminado(partes[i]);
+            }
         }
     }//GEN-LAST:event_jTextArea1CaretUpdate
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Alertas.setText("");
+        String texto=jTextArea1.getText();
+        
+        Analizador lexico = new Analizador(jTextArea1,Alertas);
+        String[] partes = texto.split("\n");
+        lexico.Cleen();
+        for (int i = 0; i < partes.length; i++) {
+            lexico.Analizar(partes[i]);
+            if(partes.length == i-1){
+                lexico.Terminado(partes[i]);
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea Alertas;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
