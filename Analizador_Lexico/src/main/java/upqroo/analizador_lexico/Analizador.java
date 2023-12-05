@@ -15,7 +15,7 @@ public class Analizador {
     String[] Diccionario_L = {"Q","W","E","R","T","Y","U","I","O","P","A","S","D","F","G","H","J","K","L","Ñ","Z","X","C","V","B","N","M",
     "q","w","e","r","t","y","u","i","o","p","a","s","d","f","g","h","j","k","l","ñ","z","x","c","v","b","n","m"};
     String[] Diccionario_N = {"0","1","2","3","4","5","6","7","8","9"};
-    String[] Diccionario_S = {"[",":" , "]", ">" , "<" , "”" , "#" , "*" , ";" , "-" , "_" , "¿" , "?" ,"@" , "(" , ")"};
+    String[] Diccionario_S = {"[",":" , "]", ">" , "<" , "”" , "#" , "*" , ";" , "-" , "_" , "¿" , "?" ,"@" , "(" , ")", " ", "."};
     String[] Diccionario_OM = {"+" , "-" , "/" , "*"};
     String[] Diccionario_OL = {"=" , "=>" , "<=" , "<" , ">" , "¡="};
     public Analizador(javax.swing.JTextArea Area, javax.swing.JTextArea Alertas){
@@ -116,17 +116,19 @@ public class Analizador {
         }
     }
     
-        private void evaluarCaracteres(String Apartado) {
-        for (char caracter : Apartado.toCharArray()) {
-            String caracterActual = String.valueOf(caracter);
-            if (!enDiccionario(caracterActual)) {
-                setColorForText(Apartado, new Color(201, 53, 42));
-                String[] saltos = Apartado.split(" ");
-                Alertas.append("Error en línea: " + saltos[0] + ". Caracter no permitido: " + caracterActual + "\n");
-                return; // Terminar la evaluación si se encuentra un caracter no permitido
-            }
+private void evaluarCaracteres(String Apartado) {
+    String evalua = Apartado.trim(); // Puedes querer quitar espacios en blanco al principio y al final
+    int longitud = evalua.length();
+
+    for (int i = 1; i < longitud; i++) {
+        String x = evalua.substring(i, i + 1);
+        if (!enDiccionario(x)) {
+            setColorForText(Apartado, new Color(201, 53, 42));
+            Alertas.append("Error en línea: " + Apartado + ". Caracter no permitido: " + x + "\n");
+            return; // Terminar la evaluación si se encuentra un caracter no permitido
         }
     }
+}
 
     private boolean enDiccionario(String caracter) {
         List<String> listaDiccionario = new ArrayList<>();
