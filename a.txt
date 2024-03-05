@@ -1,6 +1,6 @@
-*@invo*
+
 opo
-@Proceso: Persona
+*@Proceso: Persona*
  #Numero edad = 21;
  #Texto Nombre = Angel;
  #Gato Nacido = true;

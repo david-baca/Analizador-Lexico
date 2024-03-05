@@ -18,6 +18,7 @@ public class Analizador {
     String[] Diccionario_S = {"[",":" , "]", ">" , "<" , "”" , "#" , "*" , ";" , "-" , "_" , "¿" , "?" ,"@" , "(" , ")", " ", "."};
     String[] Diccionario_OM = {"+" , "-" , "/" , "*"};
     String[] Diccionario_OL = {"=" , "=>" , "<=" , "<" , ">" , "¡="};
+    
     public Analizador(javax.swing.JTextArea Area, javax.swing.JTextArea Alertas){
         this.Area = Area;
         this.Alertas = Alertas;

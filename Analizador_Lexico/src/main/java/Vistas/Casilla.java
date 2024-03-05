@@ -11,12 +11,16 @@ import javax.swing.JTextArea;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter;
-import upqroo.analizador_lexico.Analizador;
+import upqroo.analizador_lexico.Analizador2;
+import upqroo.analizador_lexico.Context;
+import static upqroo.analizador_lexico.Context.Alertas;
 
 public class Casilla extends javax.swing.JFrame {
-
+    Context c = new Context();
     public Casilla() {
         initComponents();
+        c.Area = this.Area;
+        c.Alertas = this.Alertas;
     }
 
     @SuppressWarnings("unchecked")
@@ -25,7 +29,7 @@ public class Casilla extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        Area = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -35,17 +39,17 @@ public class Casilla extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 51));
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setBackground(new java.awt.Color(153, 153, 153));
-        jTextArea1.setColumns(20);
-        jTextArea1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextArea1.setRows(5);
-        jTextArea1.setText("hola nundo");
-        jTextArea1.setCaretColor(new java.awt.Color(255, 255, 255));
-        jTextArea1.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        jTextArea1.setMargin(new java.awt.Insets(5, 5, 5, 5));
-        jTextArea1.setSelectionColor(new java.awt.Color(204, 204, 255));
-        jScrollPane1.setViewportView(jTextArea1);
+        Area.setEditable(false);
+        Area.setBackground(new java.awt.Color(153, 153, 153));
+        Area.setColumns(20);
+        Area.setForeground(new java.awt.Color(255, 255, 255));
+        Area.setRows(5);
+        Area.setText("hola nundo");
+        Area.setCaretColor(new java.awt.Color(255, 255, 255));
+        Area.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        Area.setMargin(new java.awt.Insets(5, 5, 5, 5));
+        Area.setSelectionColor(new java.awt.Color(204, 204, 255));
+        jScrollPane1.setViewportView(Area);
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Analizador Lexico Mikencode");
@@ -121,7 +125,6 @@ public class Casilla extends javax.swing.JFrame {
 
         if (result == JFileChooser.APPROVE_OPTION) {
             File archivo = fileChooser.getSelectedFile();
-
             try {
                 FileReader fileReader = new FileReader(archivo);
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -129,26 +132,20 @@ public class Casilla extends javax.swing.JFrame {
                 String linea;
                 String cadenaInicial ="";
                 int contador = 0;
-
-                
-while ((linea = bufferedReader.readLine()) != null) {
-    texto += contador + " " + eliminarTextoDobleAsterisco(linea) + "\n";
-    if (contador < 5) {
-        cadenaInicial = texto;
-    }
-    contador++;
-}
-                
-                jTextArea1.setText(texto);
-                Analizador lexico = new Analizador(jTextArea1,Alertas);
-                String[] partes = texto.split("\n");
-                lexico.Cleen();
-                for (int i = 0; i < partes.length; i++) {
-                    lexico.Analizar(partes[i]);
-                    if(partes.length == i){
-                        lexico.Terminado(partes[i]);
+                while ((linea = bufferedReader.readLine()) != null) {
+                    texto += contador + " " + eliminarTextoDobleAsterisco(linea) + "\n";
+                    if (contador < 5) {
+                        cadenaInicial = texto;
                     }
+                    contador++;
                 }
+
+                Area.setText(texto);
+                Analizador2 gerente = new Analizador2();
+                c.Cleen();
+                DefaultHighlighter alerta = (DefaultHighlighter) Alertas.getHighlighter();
+                alerta.removeAllHighlights();
+                gerente.run(texto);
 
                 
                 JOptionPane.showMessageDialog(null, "Archivo leído correctamente");
@@ -183,11 +180,11 @@ private String eliminarTextoDobleAsterisco(String linea) {
 }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea Alertas;
+    private javax.swing.JTextArea Area;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }

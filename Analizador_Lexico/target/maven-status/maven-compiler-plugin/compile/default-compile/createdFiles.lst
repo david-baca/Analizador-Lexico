@@ -1,4 +1,10 @@
-Vistas\Casilla$1.class
+Sintaxis\Numero.class
 Vistas\Casilla.class
 upqroo\analizador_lexico\Analizador_Lexico.class
+Sintaxis\Proceso.class
+Sintaxis\Biblioteca.class
+Vistas\Casilla$1.class
+upqroo\analizador_lexico\Context.class
+upqroo\analizador_lexico\Analizador2.class
+Lexico\Diccionario.class
 upqroo\analizador_lexico\Analizador.class
