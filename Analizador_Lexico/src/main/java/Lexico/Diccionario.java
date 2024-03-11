@@ -3,6 +3,7 @@ package Lexico;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import upqroo.analizador_lexico.Context;
 
@@ -15,6 +16,9 @@ public class Diccionario {
     String[] Diccionario_OM = {"+" , "-" , "/" , "*"};
     String[] Diccionario_OL = {"=" , "=>" , "<=" , "<" , ">" , "¡="};
     Context context = new Context();
+    
+    static List<Data_Variable> data_variable = new ArrayList<>();
+    
     public Diccionario(){}
     
     public void enDiccionario(String caracter) {
@@ -62,6 +66,22 @@ public class Diccionario {
         return(_nombre);
     }
 
+    public int HastaPuntoComa(String cadena) {
+        // Patrón para encontrar la primera cadena de caracteres antes del punto y coma
+        Pattern pattern = Pattern.compile("^([^;]+)");
+        Matcher matcher = pattern.matcher(cadena);
+        if (matcher.find()) {
+            return matcher.group(1).length(); // Devuelve la longitud de la cadena encontrada
+        } else {
+            return 0; // Devuelve 0 si no se encuentra ningún punto y coma
+        }
+    }
+    
+    public void addData (String type,String nombre, String valor){
+        Data_Variable x = new Data_Variable(type,nombre,valor);
+        data_variable.add(x);
+        System.out.println("se agrego a: "+nombre+" con valor: "+valor+" y tipo: "+type);
+    }
     
     
 }

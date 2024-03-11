@@ -13,6 +13,10 @@ public class Proceso {
     Diccionario diccionario = new Diccionario();
     Biblioteca biblioteca = new Biblioteca();
     Numero numero = new Numero();
+    Texto texto = new Texto();
+    Gato gato = new Gato();
+    Decimal decimal = new Decimal ();
+    EsVerdad esverdad = new EsVerdad();
     
     public Proceso(){
     }
@@ -41,13 +45,36 @@ public class Proceso {
     }
     
     public void evalueBody(){
-        //evaluamos q
+        boolean invocacion =false;
         if (context.Caracter.equals("@")) {
-            evalueExecute();
+            invocacion=evalueExecute();
+        }
+        
+        if (context.Caracter.equals("E")) {
+            esverdad.evalueInit();
+        }
+        
+        if (context.Caracter.equals("R")) {
+            //valor
+        }
+        
+        if(context.Caracter.equals("#")){
+            numero.evalueInit();
+            texto.evalueInit();
+            gato.evalueInit();
+            decimal.evalueInit();
+        }
+        
+        if(context.salto){context.salto=false; return;} // si saltaron ya dieron un error
+        
+        if (!invocacion && !context.Caracter.equals(" ") && !context.Caracter.equals("\t")){
+            String errores = context.Apartado.substring(context.i,context.Apartado.length());
+            context.ERROR("Valor no esperado [ "+errores+" ] esparando.");
+            context.saltar(context.Apartado.length()-context.i);
         }
     }
     
-    public void evalueExecute(){
+    public boolean evalueExecute(){
         try{ //preteccion por si me paso del indeice XD
             if(context.Apartado.substring(context.i-1,context.i+8).equals("@Iniciar:")){
                 String busqnombre = diccionario.evaluaEspacios(context.Apartado.substring(context.i+8,context.Apartado.length()));
@@ -55,14 +82,16 @@ public class Proceso {
                 //validar que el nombre sea correcto
                 for (String nombre : procesosName) {
                     if (nombre.equals(busqnombre)) {
-                        return;
+                        return true;
                     }
                 }
                 if(diccionario.availabeName(busqnombre)){
                     context.ERROR(" ["+busqnombre+"] "+"No se ha declarado como proceso.");
                 }
+                return true;
             }
         } catch (StringIndexOutOfBoundsException e) {}
+        return false;
     }
     
     

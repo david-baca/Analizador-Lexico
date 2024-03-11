@@ -1,6 +1,9 @@
 package upqroo.analizador_lexico;
 
+import Sintaxis.Numero;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter;
 
@@ -15,6 +18,11 @@ public class Context {
     static String[] Palabras;
     static int barril;
     
+    static List<Numero> numeros = new ArrayList<>();
+    
+    public void setNumero (Numero numero){
+        numeros.add(numero);
+    }
     
     public void saltar(int no_casillas_a_saltar){
         salto=true;
