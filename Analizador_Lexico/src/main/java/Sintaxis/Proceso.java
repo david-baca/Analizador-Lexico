@@ -17,6 +17,8 @@ public class Proceso {
     Gato gato = new Gato();
     Decimal decimal = new Decimal ();
     EsVerdad esverdad = new EsVerdad();
+    Repetir repetir = new Repetir();
+    Para para = new Para();
     
     public Proceso(){
     }
@@ -54,8 +56,12 @@ public class Proceso {
             esverdad.evalueInit();
         }
         
+        if (context.Caracter.equals("P")) {
+            para.evalueInit();
+        }
+        
         if (context.Caracter.equals("R")) {
-            //valor
+            repetir.evalueInit();
         }
         
         if(context.Caracter.equals("#")){

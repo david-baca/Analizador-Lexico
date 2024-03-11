@@ -7,8 +7,10 @@ Sintaxis\Texto.class
 Vistas\Casilla$1.class
 Lexico\Diccionario.class
 Lexico\Data_Variable.class
+Sintaxis\Para.class
 upqroo\analizador_lexico\Analizador_Lexico.class
 Sintaxis\Gato.class
+Sintaxis\Repetir.class
 Sintaxis\Decimal.class
 upqroo\analizador_lexico\Context.class
 upqroo\analizador_lexico\Analizador2.class
