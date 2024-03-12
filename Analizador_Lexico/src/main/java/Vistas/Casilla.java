@@ -161,12 +161,12 @@ private String eliminarTextoDobleAsterisco(String linea) {
     boolean dentroDeAsteriscos = false;
 
     for (char c : linea.toCharArray()) {
-        if (c == '*' && dentroDeAsteriscos) {
+        if (c == '►' && dentroDeAsteriscos) {
             dentroDeAsteriscos = false;
             continue;
         }
 
-        if (c == '*' && !dentroDeAsteriscos) {
+        if (c == '►' && !dentroDeAsteriscos) {
             dentroDeAsteriscos = true;
             continue;
         }

@@ -19,8 +19,15 @@ public class Repetir {
                     Matcher matcher = patron.matcher(contenidoBody);
                     
                     if(matcher.find()){
-                        //evaluar condicion
-                        context.saltar(contenidoBody.length());
+                        String value = matcher.group(1);
+                        String segundaEXPR = "^.*\\s[=!<>]+\\s.*$";
+                        Pattern p2 = Pattern.compile(segundaEXPR);
+                        if(p2.matcher(value).matches()){
+                            context.saltar(contenidoBody.length());
+                        }else{
+                            context.ERROR("El contenido de la sentencia Repetir no cumple la estructura");
+                            context.saltar(contenidoBody.length());
+                        }
                     }
                     
                     if(!patron.matcher(contenidoBody).matches()){

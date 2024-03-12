@@ -80,7 +80,6 @@ public class Diccionario {
     public void addData (String type,String nombre, String valor){
         Data_Variable x = new Data_Variable(type,nombre,valor);
         data_variable.add(x);
-        System.out.println("se agrego a: "+nombre+" con valor: "+valor+" y tipo: "+type);
     }
     
     

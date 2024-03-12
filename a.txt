@@ -1,10 +1,10 @@
-
-opo
-*@Proceso: Persona*
- #Numero edad = 21;
- #Texto Nombre = Angel;
- #Gato Nacido = true;
- #Decimal Peso = 1.200;
-	 
- @Terminado
+@Invoco_a:david
+@Proceso:_persona
+	@Iniciar:_persona
+	#Numero _Edad = 21-4*4;
+	#Texto Nombre = "Angel";
+	#Gato Nacido = false;
+	#Decimal Peso = 1.200;
+	EsVerdad (que = gallos)
+	Para(gato = perro Entonces perro + gato)
 @Terminado

@@ -14,13 +14,21 @@ public class Para {
                 if (estructura.contains(")")) {
                     int indexParetesis = estructura.indexOf(')');
                     String contenidoBody = estructura.substring(0, indexParetesis+1);
-                    String expresionRegular = "\\bPara\\s*\\((.*?)";
+                    String expresionRegular = "\\bPara\\s*\\((.*?)\\)\\s*";
                     Pattern patron = Pattern.compile(expresionRegular);
                     Matcher matcher = patron.matcher(contenidoBody);
                     
                     if(matcher.find()){
-                        //evaluar condicion
-                        context.saltar(contenidoBody.length());
+                        String value = matcher.group(1);
+                        System.out.println(value);
+                        String segundaEXPR = ".*[=!<>].*\\sEntonces\\s.*[+\\-*/].*";
+                        Pattern p2 = Pattern.compile(segundaEXPR);
+                        if(p2.matcher(value).matches()){
+                            context.saltar(contenidoBody.length());
+                        }else{
+                            context.ERROR("El contenido de la sentencia <Para> no cumple la estructura");
+                            context.saltar(contenidoBody.length());
+                        }
                     }
                     
                     if(!patron.matcher(contenidoBody).matches()){

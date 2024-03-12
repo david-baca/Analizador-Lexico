@@ -47,8 +47,11 @@ public class Proceso {
     }
     
     public void evalueBody(){
+        System.out.println("empieza en "+context.Caracter);
         boolean invocacion =false;
         if (context.Caracter.equals("@")) {
+            System.out.println("condicion @");
+            evalueEnd();
             invocacion=evalueExecute();
         }
         
@@ -73,9 +76,11 @@ public class Proceso {
         
         if(context.salto){context.salto=false; return;} // si saltaron ya dieron un error
         
+        System.out.println("termina en "+context.Caracter);
+        
         if (!invocacion && !context.Caracter.equals(" ") && !context.Caracter.equals("\t")){
             String errores = context.Apartado.substring(context.i,context.Apartado.length());
-            context.ERROR("Valor no esperado [ "+errores+" ] esparando.");
+            context.ERROR("EN PROCESO: Valor no esperado [ "+errores+" ] esparando.");
             context.saltar(context.Apartado.length()-context.i);
         }
     }
@@ -102,6 +107,7 @@ public class Proceso {
     
     
     public void evalueEnd(){
+        System.out.println("entra");
         try{ //preteccion por si me paso del indeice XD
             if(context.Apartado.substring(context.i-1,context.i+9).equals("@Terminado")){
                if(Estado){

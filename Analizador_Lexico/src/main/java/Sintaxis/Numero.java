@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import upqroo.analizador_lexico.Context;
 
 public class Numero {
@@ -19,13 +22,13 @@ public class Numero {
                     int indexPuntoComa = estructura.indexOf(';');
                     String contenidoBody = estructura.substring(0, indexPuntoComa);
                    
-                    String expresionRegular = "#Numero\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?:=\\s*(\\d+))?\\s*;?";
+                    String expresionRegular = "#Numero\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?:=\\s*([-+*/]?\\d+([-+*/]\\d+)*))?\\s*;?";
                     Pattern patron = Pattern.compile(expresionRegular);
                     Matcher matcher = patron.matcher(contenidoBody);
-                    
                     if(matcher.find()){
                         diccionario.addData("Numero",matcher.group(1), matcher.group(2));
                         context.saltar(contenidoBody.length());
+                            
                     }
                     
                     if(!patron.matcher(contenidoBody).matches()){
